@@ -32,13 +32,11 @@ ogdf1TA = ogdf1TA.drop(['Date_left'],axis=1)
 ogdf1TA.index = ogdf1['Date']
 
 ########### Define your variables
-tabtitle='this is test'
+tabtitle="Isaac's Final Project"
 myheading='Bitcoin Price & Analysis'
 githublink='https://github.com/isim95/flying-dog-beers'
 
 ########### Initiate the app
-# external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-# app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 app = dash.Dash(__name__)
 server = app.server
 app.title=tabtitle
@@ -46,6 +44,9 @@ app.title=tabtitle
 ########### Set up the layout
 app.layout = html.Div(children=[
     html.H1(myheading),
+    html.P(("ECON 328 Final Project"), 
+    style = {'padding' : '20px' , 
+                'backgroundColor' : '#3aaab2'}),
     dcc.Checklist(
             id='toggle-rangeslider',
             options=[{'label': 'Include Rangeslider', 
@@ -105,7 +106,6 @@ def display_candlestick(value):
     [Input("indicator1", "value"),
      Input("indicator2", 'value'),
      Input("indicator3", 'value')])
-
 
 def display_time_series(indicator1,indicator2,indicator3):
     fig1 = px.line(ogdf1, x='Date', y=[indicator1,indicator2,indicator3])
