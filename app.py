@@ -7,6 +7,7 @@ from dash.dependencies import Input, Output
 import numpy as np
 
 df = pd.read_csv('https://raw.githubusercontent.com/isim95/flying-dog-beers/master/df.csv')
+df2 = pd.read_csv('https://raw.githubusercontent.com/isim95/flying-dog-beers/master/df.csv')
 dfTA = pd.read_csv('https://raw.githubusercontent.com/isim95/flying-dog-beers/master/dfTA.csv')
 ogdf = pd.read_csv('https://raw.githubusercontent.com/isim95/flying-dog-beers/master/btc_historical.csv')
 
@@ -14,17 +15,22 @@ df.replace([np.inf, -np.inf], np.nan)
 df=df.fillna(df.mean())
 df = df.round(2)
 
+df2.replace([np.inf, -np.inf], np.nan)
+df2=df2.fillna(df.mean())
+df2 = df2.round(2)
+
 dfTA.replace([np.inf, -np.inf], np.nan)
 dfTA=dfTA.fillna(dfTA.mean())
 dfTA = dfTA.round(2)
 
 ogdf1 = df
-ogdf1TA = df
 
 ogdf1.drop(['Date'],axis=1)
 ogdf1 = ogdf1.join(ogdf, how = 'left', lsuffix = '_left', rsuffix = '')
 ogdf1 = ogdf1.drop(['Date_left'],axis=1)
 ogdf1.index = ogdf1['Date']
+
+ogdf1TA = df2
 
 ogdf1TA.drop(['Date'],axis=1)
 ogdf1TA = ogdf1TA.join(ogdf, how = 'left', lsuffix = '_left', rsuffix = '')
