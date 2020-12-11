@@ -14,7 +14,6 @@ from datetime import datetime
 df = pd.read_csv('https://raw.githubusercontent.com/isim95/flying-dog-beers/master/df.csv')
 dfTA = pd.read_csv('https://raw.githubusercontent.com/isim95/flying-dog-beers/master/dfTA.csv')
 ogdf = pd.read_csv('https://raw.githubusercontent.com/isim95/flying-dog-beers/master/btc_historical.csv')
-ogdfTA = pd.read_csv('https://raw.githubusercontent.com/isim95/flying-dog-beers/master/btc_historical.csv')
 
 df.replace([np.inf, -np.inf], np.nan)
 df=df.fillna(df.mean())
@@ -24,29 +23,14 @@ dfTA.replace([np.inf, -np.inf], np.nan)
 dfTA=dfTA.fillna(dfTA.mean())
 dfTA = dfTA.round(2)
 
-del ogdf['Price']
-del ogdf['Open']
-del ogdf['High']
-del ogdf['Low']
-del ogdf['Vol.']
-del ogdf['Change %']
-del ogdf['Close']
-
 ogdf1 = df
+ogdf1TA = df
+
 ogdf1.drop(['Date'],axis=1)
 ogdf1 = ogdf1.join(ogdf, how = 'left', lsuffix = '_left', rsuffix = '')
 ogdf1 = ogdf1.drop(['Date_left'],axis=1)
 ogdf1.index = ogdf1['Date']
 
-del ogdfTA['Price']
-del ogdfTA['Open']
-del ogdfTA['High']
-del ogdfTA['Low']
-del ogdfTA['Vol.']
-del ogdfTA['Change %']
-del ogdfTA['Close']
-
-ogdf1TA = dfTA
 ogdf1TA.drop(['Date'],axis=1)
 ogdf1TA = ogdf1TA.join(ogdf, how = 'left', lsuffix = '_left', rsuffix = '')
 ogdf1TA = ogdf1TA.drop(['Date_left'],axis=1)
@@ -111,8 +95,6 @@ def display_candlestick(value):
     fig['layout']['xaxis']['autorange'] = "reversed"
     
     return fig
-
-
 
 @app.callback(
      Output("line","figure"),
