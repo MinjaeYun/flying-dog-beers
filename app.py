@@ -8,8 +8,10 @@ import plotly
 import plotly.express as px
 import plotly.graph_objects as go
 from dash.dependencies import Input, Output
-import plotly.graph_objects as go
 from datetime import datetime
+
+tabtitle='Isaac Simons'
+
 
 df = pd.read_csv('https://raw.githubusercontent.com/isim95/flying-dog-beers/master/df.csv')
 dfTA = pd.read_csv('https://raw.githubusercontent.com/isim95/flying-dog-beers/master/dfTA.csv')
@@ -36,8 +38,12 @@ ogdf1TA = ogdf1TA.join(ogdf, how = 'left', lsuffix = '_left', rsuffix = '')
 ogdf1TA = ogdf1TA.drop(['Date_left'],axis=1)
 ogdf1TA.index = ogdf1['Date']
 
+########### Initiate the app
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+server = app.server
+app.title=tabtitle
 
-app = dash.Dash()
 app.layout = html.Div([
     html.H1("Bitcoin Price & Analysis"),
     html.P(("ECON 328 Final Project"), 
@@ -95,6 +101,8 @@ def display_candlestick(value):
     fig['layout']['xaxis']['autorange'] = "reversed"
     
     return fig
+
+
 
 @app.callback(
      Output("line","figure"),
